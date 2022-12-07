@@ -1,0 +1,25 @@
+CREATE DEFINER=`root`@`localhost` FUNCTION `purchase_status`(cust_no int) RETURNS varchar(20) CHARSET utf8mb4
+    DETERMINISTIC
+BEGIN
+
+declare result varchar(20);
+declare lcl_amt float(8,2);
+     
+	 select  sum(amount)
+     into lcl_amt 
+     from payments 
+     where customernumber = cust_no;
+     
+if lcl_amt < 25000 then
+	set result = "Silver";
+    
+elseif lcl_amt >=25000 and lcl_amt < 50000 then
+	set result = "Gold";
+    
+else
+	set result = "Platinum";
+     
+end if;
+
+RETURN (result);
+END

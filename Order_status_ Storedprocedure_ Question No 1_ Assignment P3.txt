@@ -1,0 +1,6 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `order_status`(year1 int, month1 int)
+BEGIN
+
+select ordernumber, orderdate, status from orders where year(orderdate)= year1 and month(orderdate) = month1;
+
+END

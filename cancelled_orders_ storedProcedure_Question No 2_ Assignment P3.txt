@@ -1,0 +1,9 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cancelled_orders`()
+BEGIN
+INSERT INTO cancellations ( customerNumber, orderNumber, comments)
+SELECT   customerNumber, orderNumber, comments
+FROM orders
+WHERE status = 'Cancelled';
+SELECT * FROM cancellations;                    
+				
+END

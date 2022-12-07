@@ -1,0 +1,25 @@
+--------------------------------------
+delete Cascade Trigger
+--------------------------------------
+
+CREATE DEFINER=`root`@`localhost` TRIGGER `delete_cascade` AFTER DELETE ON `movies` FOR EACH ROW BEGIN
+UPDATE rentals
+        SET movieid = NULL
+          WHERE movieid
+                       NOT IN
+            ( SELECT distinct id
+              from movies );
+END
+
+
+
+------------------------------------------
+Update Cascade Trigger
+------------------------------------------
+
+CREATE DEFINER=`root`@`localhost` TRIGGER `Update_cascade` AFTER UPDATE ON `movies` FOR EACH ROW 
+BEGIN
+UPDATE rentals
+        SET movieid = new.id
+          WHERE movieid = old.id;
+END
